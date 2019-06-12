@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import "./reset.css";
+import { Switch, Route } from "react-router-dom";
+import Profile from "./Components/Profile/Profile";
+import Dungeon from "./Components/Dungeon/Dungeon";
+import LandingPad from "./Components/Landing/LandingPad";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route exact path="/" component={LandingPad} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/dungeon" component={Dungeon} />
+        <Route
+          path="*"
+          render={() => {
+            return <div> 404 file not found</div>;
+          }}
+        />
+      </Switch>
     </div>
   );
 }
