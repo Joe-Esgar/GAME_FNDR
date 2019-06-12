@@ -84,7 +84,32 @@ module.exports = {
     });
   },
 
+  changeUserData: (req, res, next) => {
+    const { id } = req.params;
+    const { username, profile_pic } = req.body;
+    console.log(id, username, profile_pic);
+    const db = req.app.get("db");
+    db.selectUserByID(id).then(foundUser => {
+      console.log("Found user", foundUser);
+      if (foundUser.length) {
+        let newName = username || foundUser[0].username;
+        console.log(foundUser.username, "USERNAME");
+        let newPic = profile_pic || foundUser[0].profile_pic;
+        db.changeUserInfo([newName, newPic, id])
+          .then(updatedUser => {
+            console.log("UPdated user", updatedUser);
+            res.status(200).send(updatedUser);
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(500).send("change name failed");
+          });
+      }
+    });
+  },
+
   logout: (req, res, next) => {
+    console.log("logout hit");
     req.session.destroy();
     res.status(200).send("logged out");
   }

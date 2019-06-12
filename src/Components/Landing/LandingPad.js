@@ -4,7 +4,7 @@ import { setUser } from "../../ducks/userReducer";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import landingHeader from "./landingHeader";
+import LandingHeader from "./LandingHeader";
 
 class LandingPad extends Component {
   constructor(props) {
@@ -32,18 +32,11 @@ class LandingPad extends Component {
 
   register = () => {
     const { username, password, email } = this.state;
+    if (!username || !password || !email) {
+      return alert("Please enter a username, password, and email");
+    }
     axios.post("/api/register", { username, password, email }).then(res => {
       console.log("recieved user", res.data);
-      this.props.setUser(res.data);
-      this.setState({
-        redirect: true
-      });
-    });
-  };
-
-  login = () => {
-    const { username, password } = this.state;
-    axios.post("/api/login", { username, password }).then(res => {
       this.props.setUser(res.data);
       this.setState({
         redirect: true
@@ -61,34 +54,9 @@ class LandingPad extends Component {
     return (
       <div className="container">
         <div>
-          <header>
-            <div>
-              username:{" "}
-              <input
-                onChange={e =>
-                  this.universalChangeHandler(e.target.name, e.target.value)
-                }
-                value={username}
-                name="username"
-              />
-            </div>
-
-            <div>
-              Password:{" "}
-              <input
-                onChange={e =>
-                  this.universalChangeHandler(e.target.name, e.target.value)
-                }
-                type="password"
-                value={password}
-                name="password"
-              />
-            </div>
-
-            <button onClick={this.login}>Login</button>
-          </header>
+          <LandingHeader />
           <div>
-            username:{" "}
+            Username:{" "}
             <input
               onChange={e =>
                 this.universalChangeHandler(e.target.name, e.target.value)

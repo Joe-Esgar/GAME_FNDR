@@ -14,6 +14,7 @@ const {
   register,
   changeName,
   changePic,
+  changeUserData,
   logout
 } = require("./controller/authController");
 
@@ -23,6 +24,12 @@ const {
   updatePost,
   deletePost
 } = require("./controller/dungeonMaster");
+
+const {
+  getCharacters,
+  addCharacter,
+  deleteCharacter
+} = require("./controller/characterController");
 
 app.use(
   session({
@@ -44,8 +51,9 @@ massive(CONNECTION_STRING).then(db => {
 app.get("/api/user", userInfo);
 app.post("/api/register", register);
 app.post("/api/login", login);
-app.put("/api/user/:id", changeName);
-app.put("/api/userPic/:id", changePic);
+// app.put("/api/user/:id", changeName);
+// app.put("/api/userPic/:id", changePic);
+app.put("/api/user/:id", changeUserData);
 app.get("/api/logout", logout);
 
 //post endpoints
@@ -53,6 +61,11 @@ app.get("/api/posts/:id", getPosts);
 app.post("/api/post", createPost);
 app.put("/api/post/:id", updatePost);
 app.delete("/api/post", deletePost);
+
+//controller endpoints
+app.get("/api/char/:id", getCharacters);
+app.post("/api/newChar/:id", addCharacter);
+app.delete("/api/post", deleteCharacter);
 
 const path = require("path");
 
