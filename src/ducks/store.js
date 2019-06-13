@@ -2,10 +2,12 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import promiseMiddleware from "redux-promise-middleware";
 import postReducer from "./postReducer";
 import userReducer from "./userReducer";
+import characterReducer from "./characterReducer";
 
 const rootReducer = combineReducers({
-  post: postReducer,
-  user: userReducer
+  posts: postReducer,
+  user: userReducer,
+  characters: characterReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(promiseMiddleware));

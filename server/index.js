@@ -65,7 +65,7 @@ app.delete("/api/post", deletePost);
 //controller endpoints
 app.get("/api/char/:id", getCharacters);
 app.post("/api/newChar/:id", addCharacter);
-app.delete("/api/post", deleteCharacter);
+app.delete("/api/char", deleteCharacter);
 
 const path = require("path");
 

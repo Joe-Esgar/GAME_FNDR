@@ -1,21 +1,21 @@
 const initialState = {
-  posts: []
+  characters: []
 };
 
-const SET_POSTS = "SET_POSTS";
+const SET_CHARACTERS = "SET_CHARACTERS";
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case SET_POSTS:
+    case SET_CHARACTERS:
       return { ...state, user: action.payload };
     default:
       return state;
   }
 }
 
-export function setPosts(posts) {
+export function setCharacters(characters) {
   return {
-    type: SET_POSTS,
-    payload: posts
+    type: SET_CHARACTERS,
+    payload: characters
   };
 }

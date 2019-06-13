@@ -2,8 +2,8 @@ module.exports = {
   getCharacters: (req, res, next) => {
     const { id } = req.params;
     const db = req.app.get("db");
-    db.get_all_my_characters([id]).then(newChar => {
-      res.status(200).send(newChar);
+    db.get_all_my_characters([id]).then(response => {
+      res.status(200).send(response);
     });
   },
 
@@ -25,8 +25,8 @@ module.exports = {
     const {} = req.body;
     console.log(idToDelete, user_id);
     const db = req.app.get("db");
-    db.remove_char([idToDelete, user_id]).then(res => {
-      res.status(200).send(res);
+    db.remove_char([idToDelete, user_id]).then(response => {
+      res.status(200).send(response);
     });
   }
 };
