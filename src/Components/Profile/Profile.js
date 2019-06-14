@@ -5,6 +5,7 @@ import { set_Username, set_Profile_Pic } from "../../ducks/userReducer";
 import { connect } from "react-redux";
 import { setCharacters } from "../../ducks/characterReducer";
 import Characters from "./Characters";
+import SearchContainer from "./SearchContainer";
 
 class Profile extends Component {
   constructor(props) {
@@ -19,52 +20,13 @@ class Profile extends Component {
       character_class: "",
       description: "",
       bio: "",
-      myOtherToggle: false,
-      myAddress: "",
-      geoData: "",
-      lat: 0,
-      lon: 0
+      myOtherToggle: false
     };
   }
 
   componentDidMount() {
     this.getFromDB();
   }
-
-  //   https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
-  //https://maps.googleapis.com/maps/api/geocode/json?address=101+Dupont+Circle,+Phoenix,+AZ&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc
-
-  getGeoData = myAddress => {
-    console.log(myAddress, "YO THIS MY ADDRESS GOOGLE");
-    axios
-      .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc`
-      )
-      .then(res => {
-        console.log(res.data, "FUCK IT");
-        this.setState({
-          geoData: res.data,
-          lat: res.data.results[0].geometry.location.lat,
-          lon: res.data.results[0].geometry.location.lng
-        });
-      })
-      .then(() => this.postMe(this.state.lat, this.state.lon));
-  };
-
-  //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
-  //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.4483154197085,-111.9872909802915&radius=48280&type=gamestore&keyword=gamestore&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc
-
-  // getPlace = (lat, lon) => {
-  //   console.log(lat, lon, `We will Do it LIVE!`);
-
-  //   axios
-  //     .get(
-  //       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=48280&type=gamestore&keyword=gamestore&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc`
-  //     )
-  //     .then(res => {
-  //       console.log(res.data);
-  //     });
-  // };
 
   getFromDB = () => {
     axios
@@ -77,10 +39,6 @@ class Profile extends Component {
         });
       })
       .then(() => this.getCharFromDb(this.state.id));
-  };
-
-  postMe = (lat, lon) => {
-    axios.post("/api/fail", { lat, lon }).then(res => console.log(res.data));
   };
 
   getCharFromDb = id => {
@@ -147,9 +105,7 @@ class Profile extends Component {
       description,
       character_name,
       bio,
-      myOtherToggle,
-      geoData,
-      myAddress
+      myOtherToggle
     } = this.state;
     const mappedCharacters = myCharacters.map((element, index) => {
       return (
@@ -272,17 +228,7 @@ class Profile extends Component {
             </button>
           </div>
         )}
-        <div className="SearchBox">
-          <h2>Address example: 101 Dupont Circle Phoenix AZ</h2>
-          <input
-            onChange={e =>
-              this.universalChangeHandler(e.target.name, e.target.value)
-            }
-            value={myAddress}
-            name="myAddress"
-          />
-          <button onClick={() => this.getGeoData(myAddress)}>Search</button>
-        </div>
+        <SearchContainer />
       </div>
     );
   }
