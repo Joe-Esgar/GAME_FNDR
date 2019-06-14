@@ -5,7 +5,12 @@ const massive = require("massive");
 app.use(express.json());
 const session = require("express-session");
 
-const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
+const {
+  SERVER_PORT,
+  CONNECTION_STRING,
+  SESSION_SECRET,
+  REACT_APP_API_KEY
+} = process.env;
 const port = SERVER_PORT || 4000;
 
 const {

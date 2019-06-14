@@ -22,7 +22,9 @@ export default class SearchContainer extends Component {
   getGeoData = myAddress => {
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${myAddress}&key=${
+          process.env.REACT_APP_API_KEY
+        }`
       )
       .then(res => {
         this.setState({
