@@ -25,6 +25,8 @@ const {
   deletePost
 } = require("./controller/dungeonMaster");
 
+const { zachBrokeOurInternet } = require("./controller/corsController");
+
 const {
   getCharacters,
   addCharacter,
@@ -66,6 +68,9 @@ app.delete("/api/post", deletePost);
 app.get("/api/char/:id", getCharacters);
 app.post("/api/newChar/:id", addCharacter);
 app.delete("/api/char", deleteCharacter);
+
+//zach endpoints
+app.post("/api/fail", zachBrokeOurInternet);
 
 const path = require("path");
 

@@ -48,23 +48,23 @@ class Profile extends Component {
           lon: res.data.results[0].geometry.location.lng
         });
       })
-      .then(() => this.getPlace(this.state.lat, this.state.lon));
+      .then(() => this.postMe(this.state.lat, this.state.lon));
   };
 
   //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
   //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.4483154197085,-111.9872909802915&radius=48280&type=gamestore&keyword=gamestore&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc
 
-  getPlace = (lat, lon) => {
-    console.log(lat, lon, `We will Do it LIVE!`);
+  // getPlace = (lat, lon) => {
+  //   console.log(lat, lon, `We will Do it LIVE!`);
 
-    axios
-      .get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=48280&type=gamestore&keyword=gamestore&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc`
-      )
-      .then(res => {
-        console.log(res.data);
-      });
-  };
+  //   axios
+  //     .get(
+  //       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lon}&radius=48280&type=gamestore&keyword=gamestore&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc`
+  //     )
+  //     .then(res => {
+  //       console.log(res.data);
+  //     });
+  // };
 
   getFromDB = () => {
     axios
@@ -77,6 +77,10 @@ class Profile extends Component {
         });
       })
       .then(() => this.getCharFromDb(this.state.id));
+  };
+
+  postMe = (lat, lon) => {
+    axios.post("/api/fail", { lat, lon }).then(res => console.log(res.data));
   };
 
   getCharFromDb = id => {
