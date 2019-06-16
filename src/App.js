@@ -4,6 +4,8 @@ import "./reset.css";
 import { Switch, Route } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import Dungeon from "./Components/Dungeon/Dungeon";
+import "./reset.css";
+import "./App.css";
 import LandingPad from "./Components/Landing/LandingPad";
 
 function App() {

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { setCharacters } from "../../ducks/characterReducer";
 import Characters from "./Characters";
 import SearchContainer from "./SearchContainer";
+import "./profile.css";
 
 class Profile extends Component {
   constructor(props) {

@@ -4,6 +4,7 @@ import { setUser } from "../../ducks/userReducer";
 import axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import logo from "./logo2.png";
 
 class LandingHeader extends Component {
   constructor(props) {
@@ -54,30 +55,38 @@ class LandingHeader extends Component {
       return <Redirect to="/profile" />;
     }
     return (
-      <div className="container">
+      <div className="headerContainer">
         <header>
           <div>
-            Username:{" "}
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={username}
-              name="username"
-            />
+            <img src={logo} alt="Logo" />
           </div>
+          <h1>Dungeon Finder</h1>
           <div>
-            Password:{" "}
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              type="password"
-              value={password}
-              name="password"
-            />
+            <div>
+              Username:{" "}
+              <input
+                className="landingInput"
+                onChange={e =>
+                  this.universalChangeHandler(e.target.name, e.target.value)
+                }
+                value={username}
+                name="username"
+              />
+            </div>
+            <div>
+              Password:{" "}
+              <input
+                className="landingInput"
+                onChange={e =>
+                  this.universalChangeHandler(e.target.name, e.target.value)
+                }
+                type="password"
+                value={password}
+                name="password"
+              />
+            </div>
+            <button onClick={this.login}>Login</button>
           </div>
-          <button onClick={this.login}>Login</button>
         </header>
       </div>
     );

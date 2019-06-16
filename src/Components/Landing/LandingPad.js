@@ -13,7 +13,9 @@ class LandingPad extends Component {
       username: "",
       password: "",
       email: "",
-      redirect: false
+      redirect: false,
+      redirectTwo: false,
+      enter: false
     };
   }
 
@@ -47,49 +49,72 @@ class LandingPad extends Component {
   render() {
     console.log(this.props, "props");
     console.log(this.state, "state");
-    const { username, password, email, redirect } = this.state;
+    const { username, password, email, redirect, enter } = this.state;
     if (redirect) {
       return <Redirect to="/profile" />;
     }
     return (
-      <div className="container">
-        <div>
-          <LandingHeader />
-          <div>
-            Username:{" "}
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={username}
-              name="username"
-            />
-          </div>
-          <div>
-            Email:{" "}
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={email}
-              type="email"
-              name="email"
-            />
-          </div>
-          <div>
-            Password:{" "}
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              type="password"
-              value={password}
-              name="password"
-            />
-          </div>
-          <div>
-            <button onClick={this.register}>Register</button>
-          </div>
+      <div className="wrapper">
+        <LandingHeader />
+        <div className="container">
+          {enter ? (
+            <div className="registerContainer">
+              <div className="register">
+                <div className="reg">
+                  <h2>Username</h2>
+                  <input
+                    className="landingInput"
+                    onChange={e =>
+                      this.universalChangeHandler(e.target.name, e.target.value)
+                    }
+                    value={username}
+                    name="username"
+                  />
+                </div>
+                <div className="reg">
+                  <h2>Email</h2>
+                  <input
+                    className="landingInput"
+                    onChange={e =>
+                      this.universalChangeHandler(e.target.name, e.target.value)
+                    }
+                    value={email}
+                    type="email"
+                    name="email"
+                  />
+                </div>
+                <div className="reg">
+                  <h2>Password</h2>
+                  <input
+                    className="landingInput"
+                    onChange={e =>
+                      this.universalChangeHandler(e.target.name, e.target.value)
+                    }
+                    type="password"
+                    value={password}
+                    name="password"
+                  />
+                </div>
+                <div className="reg">
+                  <button onClick={this.register}>Register</button>
+                  <button onClick={() => this.setState({ enter: false })}>
+                    Flee
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="intro">
+              <p>
+                If you seek tabletop adventures <br /> and companions to share
+                them with <br />
+                enter here.
+              </p>
+              <button onClick={() => this.setState({ enter: true })}>
+                Enter
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );
