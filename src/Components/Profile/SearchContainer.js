@@ -46,7 +46,11 @@ export default class SearchContainer extends Component {
       toggle: false,
       places: [],
       refresh: true,
-      center: {}
+      center: {},
+      hover: false,
+      infoBox: false,
+      curLat: 0,
+      curLng: 0
     };
   }
 
@@ -118,6 +122,32 @@ export default class SearchContainer extends Component {
     });
   };
 
+  onChildMouseEnter = (num, childProps) => {
+    if (childProps.place === undefined) {
+      return null;
+    } else {
+      this.setState({
+        facilityName: childProps.place.name,
+        curLat: childProps.lat,
+        curLng: childProps.lng,
+        hover: true
+      });
+    }
+  };
+
+  onChildMouseLeave = (num, childProps) => {
+    console.log("leaving");
+    if (childProps.place === undefined) {
+      return null;
+    } else {
+      this.setState({
+        curLat: "",
+        curLng: "",
+        hover: false
+      });
+    }
+  };
+
   render() {
     const { myAddress, searchResults, toggle, lat, lon, places } = this.state;
     console.log("lat:", lat, "lon", lon, "places", places);
@@ -146,11 +176,11 @@ export default class SearchContainer extends Component {
               >
                 {places.map((place, index) => (
                   <Marker
-                    key={index}
-                    id={place.id}
+                    key={place.index}
                     text={place.name}
                     lat={place.lat}
                     lng={place.lng}
+                    icon="/Users/josephesgar/GAME_FNDR/src/Components/Landing/Myscroll.jpeg"
                   />
                 ))}
               </GoogleMapReact>

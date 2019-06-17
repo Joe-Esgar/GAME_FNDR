@@ -13,6 +13,7 @@
     "http-proxy-middleware": "^0.19.1",
     "lodash": "^4.17.11",
     "massive": "^5.11.0",
+    "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -23,7 +24,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.0.1",
     "redux": "^4.0.1",
-    "redux-promise-middleware": "^6.1.0"
+    "redux-promise-middleware": "^6.1.0",
+    "sass-loader": "^7.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

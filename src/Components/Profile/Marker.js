@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Marker.scss";
 
 export default class Marker extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ export default class Marker extends Component {
 
   render() {
     const { lat, lng, name } = this.props;
-    return <div lat={lat} lng={lng} name={name} />;
+    console.log("HERE", lat, lng, name);
+    return <div className="points" lat={lat} lng={lng} />;
   }
 }
