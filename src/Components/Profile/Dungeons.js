@@ -51,13 +51,11 @@ class Dungeons extends Component {
   // } = req.body;
 
   render() {
-    console.log(this.props.time_entered);
+    console.log("check", this.props);
     if (!this.props.user.user) {
       return <></>;
     }
-    if (!this.props.currentCharacter.currentCharacter) {
-      return <></>;
-    }
+
     console.log("PROPS IN DUNGHEONS,", this.props);
     const post = {
       content: this.state.content,

@@ -6,6 +6,9 @@ import axios from "axios";
 import { setPosts } from "../../ducks/postReducer";
 import { connect } from "react-redux";
 import { setUser } from "../../ducks/userReducer";
+import { set_Dungeons } from "../../ducks/dungeonReducer";
+import { setCurrentCharacter } from "../../ducks/currentCharacterReducer";
+import { Redirect } from "react-router-dom";
 
 class Dungeon extends Component {
   constructor(props) {
@@ -14,12 +17,26 @@ class Dungeon extends Component {
       posts: [],
       dunId: 0,
       content: "",
-      id: 0
+      id: 0,
+      rerender: false
     };
   }
 
   componentDidMount() {
+    this.getDungeons();
     this.getFromDB();
+  }
+
+  getDungeons = () => {
+    axios.get("/api/dungeons").then(res => {
+      console.log("dungeons res.data:", res.data);
+      this.props.set_Dungeons(res.data);
+    });
+  };
+
+  componentDidMount() {
+    this.getFromDB();
+    this.getDungeons();
   }
 
   getFromDB = () => {
@@ -42,15 +59,23 @@ class Dungeon extends Component {
   };
 
   getIdOnClick = id => {
-    console.log(id);
-    this.setState({
-      dunId: id
-    });
+    console.log("onClickID:", id);
+    this.setState(
+      {
+        dunId: id
+      },
+      () => {
+        this.getPosts(this.state.dunId);
+      }
+    );
     console.log(this.state.id);
-    this.getPosts(this.state.dunId);
   };
 
   render() {
+    if (this.props.currentCharacter.currentCharacter === 0) {
+      alert("Sorry! Please Reselect your character!");
+      return <Redirect to="/profile" />;
+    }
     console.log(this.state.posts);
     const mappedPosts = this.state.posts.map((element, index) => {
       return (
@@ -78,7 +103,9 @@ const mappedStateToProps = reduxState => {
 
 const mapDispatchToProps = {
   setPosts,
-  setUser
+  setUser,
+  set_Dungeons,
+  setCurrentCharacter
 };
 
 const invokedConnect = connect(

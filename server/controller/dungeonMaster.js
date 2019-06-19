@@ -29,7 +29,7 @@ module.exports = {
         db.create_dungeon([dungeon_name, dungeon_address])
           .then(response => {
             console.log(response);
-            const { dungeon_id } = response;
+            const { dungeon_id } = response[0];
             db.create_post([
               content,
               dungeon_id,

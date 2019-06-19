@@ -14,6 +14,8 @@ import SearchContainer from "./SearchContainer";
 import "./profile.css";
 import DungeonList from "./DungeonList";
 import CharacterSelector from "./CharacterSelector";
+import { setPosts } from "../../ducks/postReducer";
+import { Redirect } from "react-router-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -29,9 +31,34 @@ class Profile extends Component {
       description: "",
       bio: "",
       myOtherToggle: false,
-      selectedCharacter: 0
+      selectedCharacter: 0,
+      rerender: false,
+      dunId: 0,
+      redirect: false
     };
   }
+
+  getPosts = id => {
+    axios.get(`/api/posts/${id}`).then(res => {
+      this.props.setPosts(res.data);
+      this.setState({
+        posts: res.data
+      });
+    });
+  };
+
+  getIdOnClick = id => {
+    console.log(id);
+    this.setState({
+      dunId: id
+    });
+    console.log(this.state.id);
+    this.getPosts(this.state.dunId);
+    this.setState({
+      redirect: true
+    });
+  };
+
 
   componentDidMount() {
     this.getFromDB();
@@ -88,6 +115,15 @@ class Profile extends Component {
         this.props.setCharacters(res.data);
       })
       .then(this.getFromDB());
+    if (!this.state.rerender) {
+      this.setState({
+        rerender: true
+      });
+    } else {
+      this.setState({
+        rerender: false
+      });
+    }
   };
 
   changeUserInfo = id => {
@@ -117,6 +153,9 @@ class Profile extends Component {
 
   render() {
     console.log("this.props:", this.props);
+    if (this.state.redirect) {
+      return <Redirect to="/dungeon" />;
+    }
     const {
       username,
       profile_pic,
@@ -268,7 +307,7 @@ class Profile extends Component {
           </div>
         )}
         <SearchContainer />
-        <DungeonList />
+        <DungeonList getIdOnClick={this.getIdOnClick} />
       </div>
     );
   }
@@ -283,7 +322,8 @@ const mapDispatchToProps = {
   set_Profile_Pic,
   setCharacters,
   setCurrentCharacter,
-  setUser
+  setUser,
+  setPosts
 };
 
 const invokedConnect = connect(
