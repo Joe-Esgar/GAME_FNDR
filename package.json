@@ -25,7 +25,8 @@
     "react-scripts": "^3.0.1",
     "redux": "^4.0.1",
     "redux-promise-middleware": "^6.1.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "semantic-ui-react": "^0.87.2"
   },
   "scripts": {
     "start": "react-scripts start",

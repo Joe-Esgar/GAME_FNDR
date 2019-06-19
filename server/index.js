@@ -27,7 +27,8 @@ const {
   getPosts,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
+  getAllDungeons
 } = require("./controller/dungeonMaster");
 
 const { zachBrokeOurInternet } = require("./controller/corsController");
@@ -63,8 +64,9 @@ app.post("/api/login", login);
 app.put("/api/user/:id", changeUserData);
 app.get("/api/logout", logout);
 
-//post endpoints
+//dungeon endpoints
 app.get("/api/posts/:id", getPosts);
+app.get("/api/dungeons", getAllDungeons);
 app.post("/api/post", createPost);
 app.put("/api/post/:id", updatePost);
 app.delete("/api/post", deletePost);

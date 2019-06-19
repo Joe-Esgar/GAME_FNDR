@@ -7,7 +7,7 @@ const SET_CHARACTERS = "SET_CHARACTERS";
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_CHARACTERS:
-      return { ...state, user: action.payload };
+      return { ...state, characters: action.payload };
     default:
       return state;
   }

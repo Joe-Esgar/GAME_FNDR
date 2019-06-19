@@ -1,3 +1,3 @@
 select *
 from dungeons
-where dungeon_name = $1;
+where dungeon_address = $1;

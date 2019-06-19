@@ -22,6 +22,7 @@ export default function reducer(state = initialState, action) {
 }
 
 export function setUser(user) {
+  console.log("REduxx user", user);
   return {
     type: SET_USER,
     payload: user

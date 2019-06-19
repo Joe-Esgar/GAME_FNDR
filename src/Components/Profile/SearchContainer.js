@@ -3,6 +3,11 @@ import React, { Component, Fragment } from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import "./profile.css";
+import StoreList from "./StoreList";
+import FullList from "./FullList";
+import logo from "../Landing/logo2.png";
+import ogreJosh from "./ogreJosh.png";
+import DungeonList from "./DungeonList";
 // import isEmpty from "lodash.isempty";
 
 const getMapBounds = (map, maps, places) => {
@@ -22,17 +27,6 @@ const bindResizeListener = (map, maps, bounds) => {
   });
 };
 
-// Fit map to its bounds after the api is loaded
-const apiIsLoaded = (map, maps, places) => {
-  console.log("Loaded api");
-  // Get bounds by our places
-  const bounds = getMapBounds(map, maps, places);
-  // Fit map to bounds
-  map.fitBounds(bounds);
-  // Bind the resize listener
-  bindResizeListener(map, maps, bounds);
-};
-
 export default class SearchContainer extends Component {
   constructor(props) {
     super(props);
@@ -45,39 +39,56 @@ export default class SearchContainer extends Component {
       searchResults: [],
       toggle: false,
       places: [],
-      refresh: true,
       center: {},
+      listName: "",
+      mapName: "",
       hover: false,
-      infoBox: false,
-      curLat: 0,
-      curLng: 0
+      toggle: false,
+      id: 0,
+      secondToggle: false,
+      image: logo
     };
   }
+
+  mapOnClick = id => {
+    const found = this.state.places.filter((element, index) => {
+      return element.id == id;
+    });
+    console.log(found);
+    if (found.length) {
+      this.setState({
+        id: found[0].id
+      });
+    }
+  };
 
   //   https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
   //https://maps.googleapis.com/maps/api/geocode/json?address=101+Dupont+Circle,+Phoenix,+AZ&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc
 
   makeMap = arr => {
-    console.log("make map", "arr:", arr);
     const newArray = [];
+    const regex = /gamestop/gi;
     for (let i = 0; i < arr.length; i++) {
-      //   console.log(arr[i]);
-      newArray.push({
-        name: arr[i].name,
-        lat: arr[i].geometry.location.lat,
-        lng: arr[i].geometry.location.lng
-      });
-    }
-    this.setState({
-      places: newArray,
-      toggle: true,
-      center: {
-        lat: this.state.lat,
-        lng: this.state.lon
+      if (regex.test(arr[i].name) === false) {
+        newArray.push({
+          name: arr[i].name,
+          lat: arr[i].geometry.location.lat,
+          lng: arr[i].geometry.location.lng,
+          address: arr[i].vicinity,
+          id: arr[i].place_id
+        });
       }
-    });
+      this.setState({
+        places: newArray,
+        toggle: true,
+        center: {
+          lat: this.state.lat,
+          lng: this.state.lon
+        }
+      });
 
-    // console.log("make map state:", this.state);
+      // console.log("make map state:", this.state);
+    }
   };
 
   getGeoData = myAddress => {
@@ -93,16 +104,8 @@ export default class SearchContainer extends Component {
           lat: res.data.results[0].geometry.location.lat,
           lon: res.data.results[0].geometry.location.lng
         });
-        // console.log(
-        //   "GET GEODATA RAN",
-        //   "res.data:",
-        //   res.data,
-        //   "state:",
-        //   this.state
-        // );
       })
       .then(() => this.postMe(this.state.lat, this.state.lon));
-    //   .then(() => this.makeMap(this.state.searchResults));
   };
 
   postMe = (lat, lon) => {
@@ -116,41 +119,40 @@ export default class SearchContainer extends Component {
   };
 
   universalChangeHandler = (prop, value) => {
-    // console.log("Prop:", prop, "value:", value);
     this.setState({
       [prop]: value
     });
   };
 
-  onChildMouseEnter = (num, childProps) => {
-    if (childProps.place === undefined) {
-      return null;
-    } else {
-      this.setState({
-        facilityName: childProps.place.name,
-        curLat: childProps.lat,
-        curLng: childProps.lng,
-        hover: true
-      });
-    }
-  };
-
-  onChildMouseLeave = (num, childProps) => {
-    console.log("leaving");
-    if (childProps.place === undefined) {
-      return null;
-    } else {
-      this.setState({
-        curLat: "",
-        curLng: "",
-        hover: false
-      });
-    }
+  killTheOgreJosh = () => {
+    this.setState({
+      image: logo
+    });
+    return alert("MISSLES LAUNCHED! HOLD ON TO YOUR TEETH!");
   };
 
   render() {
-    const { myAddress, searchResults, toggle, lat, lon, places } = this.state;
-    console.log("lat:", lat, "lon", lon, "places", places);
+    const {
+      myAddress,
+      searchResults,
+      toggle,
+      lat,
+      lon,
+      places,
+      secondToggle
+    } = this.state;
+    const fullList = places.map((store, index) => {
+      return <FullList key={index} name={store.name} address={store.address} />;
+    });
+    const mappedStores = places.filter((store, index) => {
+      console.log(this.state.id, store.id);
+      return this.state.id === store.id;
+    });
+    const filteredStores = mappedStores.map((store, index) => {
+      return (
+        <StoreList key={index} name={store.name} address={store.address} />
+      );
+    });
     return (
       <div className="SearchBox">
         <h2>Address example: 111 Dupont Circle Phoenix AZ</h2>
@@ -162,9 +164,6 @@ export default class SearchContainer extends Component {
           name="myAddress"
         />
         <button onClick={() => this.getGeoData(myAddress)}>Search</button>
-        {/* <button onClick={() => this.setState({ refresh: false })}>
-          Refresh
-        </button> */}
         {toggle ? (
           <div id="map">
             <Fragment>
@@ -180,11 +179,41 @@ export default class SearchContainer extends Component {
                     text={place.name}
                     lat={place.lat}
                     lng={place.lng}
-                    icon="/Users/josephesgar/GAME_FNDR/src/Components/Landing/Myscroll.jpeg"
+                    mapOnClick={this.mapOnClick}
+                    id={place.id}
+                    image={this.state.image}
                   />
                 ))}
               </GoogleMapReact>
             </Fragment>
+          </div>
+        ) : (
+          <div />
+        )}
+        {toggle ? (
+          <div className="InfoBoxContainer">
+            <h4>Click a location to view info!</h4>
+            <div>{filteredStores}</div>
+            {!secondToggle ? (
+              <button onClick={() => this.setState({ secondToggle: true })}>
+                Show All
+              </button>
+            ) : (
+              <button onClick={() => this.setState({ secondToggle: false })}>
+                Hide All
+              </button>
+            )}
+            {this.state.image === logo ? (
+              <button onClick={() => this.setState({ image: ogreJosh })}>
+                Fun Mode
+              </button>
+            ) : (
+              <button onClick={() => this.killTheOgreJosh()}>
+                {" "}
+                Slay the ogreJosh
+              </button>
+            )}
+            {secondToggle ? <div>{fullList}</div> : null}
           </div>
         ) : (
           <div />

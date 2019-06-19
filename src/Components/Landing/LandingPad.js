@@ -20,10 +20,15 @@ class LandingPad extends Component {
   }
 
   universalChangeHandler = (prop, value) => {
-    console.log(prop, value);
-    this.setState({
-      [prop]: value
-    });
+    let regex = /zach/gi;
+    if (regex.test(value) === false) {
+      console.log("Prop:", prop, "value:", value);
+      this.setState({
+        [prop]: value
+      });
+    } else {
+      return alert("ZACH IS BANHAMMERED");
+    }
   };
 
   componentDidMount() {

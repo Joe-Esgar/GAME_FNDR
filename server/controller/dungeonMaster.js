@@ -7,12 +7,22 @@ module.exports = {
     );
   },
 
+  getAllDungeons: (req, res, next) => {
+    const db = req.app.get("db");
+    db.get_all_dungeons().then(dungeons => res.status(200).send(dungeons));
+  },
+
   createPost: (req, res, next) => {
     console.log(req.body, "REQ BODY");
-    const { content, user_id, character_id, dungeon_name } = req.body;
+    const {
+      content,
+      user_id,
+      character_id,
+      dungeon_name,
+      dungeon_address
+    } = req.body;
     const db = req.app.get("db");
-    db.check_if_dungeon_exists(dungeon_name).then(dungeonFound => {
-      const { dungeon_address } = req.body;
+    db.check_if_dungeon_exists(dungeon_address).then(dungeonFound => {
       if (!dungeonFound.length) {
         console.log("created new page");
         console.log(dungeon_name, dungeon_address, "HELLO ME");

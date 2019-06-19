@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Header from "../Header/Header";
-import { set_Username, set_Profile_Pic } from "../../ducks/userReducer";
+import {
+  set_Username,
+  set_Profile_Pic,
+  setUser
+} from "../../ducks/userReducer";
 import { connect } from "react-redux";
 import { setCharacters } from "../../ducks/characterReducer";
+import { setCurrentCharacter } from "../../ducks/currentCharacterReducer";
 import Characters from "./Characters";
 import SearchContainer from "./SearchContainer";
 import "./profile.css";
+import DungeonList from "./DungeonList";
+import CharacterSelector from "./CharacterSelector";
 
 class Profile extends Component {
   constructor(props) {
@@ -21,7 +28,8 @@ class Profile extends Component {
       character_class: "",
       description: "",
       bio: "",
-      myOtherToggle: false
+      myOtherToggle: false,
+      selectedCharacter: 0
     };
   }
 
@@ -35,6 +43,8 @@ class Profile extends Component {
       .then(res => {
         this.props.set_Username(res.data.username);
         this.props.set_Profile_Pic(res.data.profile_pic);
+        this.props.setUser(res.data);
+        console.log(res.data.user_id);
         this.setState({
           id: res.data.user_id
         });
@@ -43,6 +53,7 @@ class Profile extends Component {
   };
 
   getCharFromDb = id => {
+    console.log(id);
     axios.get(`/api/char/${id}`).then(res => {
       this.props.setCharacters(res.data);
       this.setState({
@@ -70,8 +81,9 @@ class Profile extends Component {
   };
 
   deleteChar = (chId, id) => {
+    console.log("chId:", chId, "id", id);
     axios
-      .delete(`/api/char?idToDelete=${chId}&oq=${id}`)
+      .delete(`/api/char?idToDelete=${chId}&user_id=${id}`)
       .then(res => {
         this.props.setCharacters(res.data);
       })
@@ -95,7 +107,16 @@ class Profile extends Component {
     });
   };
 
+  characterChange = value => {
+    console.log("characterChange:", value);
+    this.setState({
+      selectedCharacter: value
+    });
+    this.props.setCurrentCharacter(value);
+  };
+
   render() {
+    console.log("this.props:", this.props);
     const {
       username,
       profile_pic,
@@ -126,9 +147,26 @@ class Profile extends Component {
         </div>
       );
     });
+    const mappedSelector = myCharacters.map((element, index) => {
+      return (
+        <CharacterSelector
+          chId={element.character_id}
+          name={element.character_name}
+        />
+      );
+    });
     return (
-      <div>
+      <div className="ProfileWrapper">
         <div className="profileContainer">PROFILE</div>
+        <h3>Select character to post as</h3>
+        <select
+          onChange={e => this.characterChange(+e.target.value)}
+          value={this.state.selectedCharacter}
+          name="selectedCharacter"
+        >
+          <option />
+          {mappedSelector}
+        </select>
         <Header />
         {myOtherToggle ? (
           <div className="changer">
@@ -230,6 +268,7 @@ class Profile extends Component {
           </div>
         )}
         <SearchContainer />
+        <DungeonList />
       </div>
     );
   }
@@ -242,7 +281,9 @@ const mappedStateToProps = reduxState => {
 const mapDispatchToProps = {
   set_Username,
   set_Profile_Pic,
-  setCharacters
+  setCharacters,
+  setCurrentCharacter,
+  setUser
 };
 
 const invokedConnect = connect(
