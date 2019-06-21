@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { Component, Fragment } from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
-import "./profile.css";
 import StoreList from "./StoreList";
 import FullList from "./FullList";
 import logo from "../Landing/logo2.png";

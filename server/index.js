@@ -4,6 +4,7 @@ const app = express();
 const massive = require("massive");
 app.use(express.json());
 const session = require("express-session");
+app.use(express.static(__dirname + "/../build"));
 
 const {
   SERVER_PORT,
@@ -80,5 +81,9 @@ app.delete("/api/char", deleteCharacter);
 app.post("/api/fail", zachBrokeOurInternet);
 
 const path = require("path");
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirmane, "/../build.index.html"));
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
