@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setPosts } from "../../ducks/postReducer";
 import { setCurrentCharacter } from "../../ducks/currentCharacterReducer";
 import { setUser } from "../../ducks/userReducer";
+import { toast } from "react-toastify";
 
 class Dungeons extends Component {
   constructor(props) {
@@ -22,9 +23,15 @@ class Dungeons extends Component {
   // }
 
   createPost = object => {
-    axios.post(`/api/post`, object).then(res => {
-      this.props.setPosts(res.data);
-    });
+    axios
+      .post(`/api/post`, object)
+      .then(res => {
+        toast.success("Post Created");
+        this.props.setPosts(res.data);
+      })
+      .catch(err => {
+        toast.error("Post Failed");
+      });
   };
 
   universalChangeHandler = (prop, value) => {
@@ -55,7 +62,6 @@ class Dungeons extends Component {
     if (!this.props.user.user) {
       return <></>;
     }
-
     console.log("PROPS IN DUNGHEONS,", this.props);
     const post = {
       content: this.state.content,

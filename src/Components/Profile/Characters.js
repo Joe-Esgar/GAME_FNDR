@@ -7,11 +7,15 @@ export default function(props) {
     <div>
       <div className="charbox">
         <ul>
+          <h2>Character Name:</h2>
           <li>{name}</li>
+          <h2>Character Class:</h2>
           <li>{charClass}</li>
+          <h2>Character Description:</h2>
           <li>{description}</li>
+          <h2>Character Bio:</h2>
           <li>{bio}</li>
-          <button onClick={() => deleteChar(chId, id)} />
+          <button onClick={() => deleteChar(chId, id)}>Delete</button>
         </ul>
       </div>
     </div>

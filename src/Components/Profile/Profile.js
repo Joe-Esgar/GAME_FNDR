@@ -11,11 +11,12 @@ import { setCharacters } from "../../ducks/characterReducer";
 import { setCurrentCharacter } from "../../ducks/currentCharacterReducer";
 import Characters from "./Characters";
 import SearchContainer from "./SearchContainer";
-import "./profile.css";
+import "./Profile.scss";
 import DungeonList from "./DungeonList";
 import CharacterSelector from "./CharacterSelector";
 import { setPosts } from "../../ducks/postReducer";
 import { Redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 class Profile extends Component {
   constructor(props) {
@@ -59,7 +60,6 @@ class Profile extends Component {
     });
   };
 
-
   componentDidMount() {
     this.getFromDB();
   }
@@ -92,7 +92,9 @@ class Profile extends Component {
   addChar = id => {
     const { character_name, character_class, bio, description } = this.state;
     if (!character_name || !character_class || !bio || !description) {
-      return alert("Please fill all values");
+      return toast.error(
+        "Please Select a character to post as. Make one if you don't have one."
+      );
     }
     axios
       .post(`/api/newChar/${id}`, {
@@ -115,15 +117,6 @@ class Profile extends Component {
         this.props.setCharacters(res.data);
       })
       .then(this.getFromDB());
-    if (!this.state.rerender) {
-      this.setState({
-        rerender: true
-      });
-    } else {
-      this.setState({
-        rerender: false
-      });
-    }
   };
 
   changeUserInfo = id => {
@@ -194,120 +187,153 @@ class Profile extends Component {
         />
       );
     });
+    // {this.props.user.username}
     return (
       <div className="ProfileWrapper">
-        <div className="profileContainer">PROFILE</div>
-        <h3>Select character to post as</h3>
-        <select
-          onChange={e => this.characterChange(+e.target.value)}
-          value={this.state.selectedCharacter}
-          name="selectedCharacter"
-        >
-          <option />
-          {mappedSelector}
-        </select>
         <Header />
-        {myOtherToggle ? (
-          <div className="changer">
-            <div>
-              Username:{" "}
-              <input
-                onChange={e =>
-                  this.universalChangeHandler(e.target.name, e.target.value)
-                }
-                value={username}
-                name="username"
-              />
+        <div className="profileContainer">
+          <ul>
+            <li className="userName">{this.props.user.username}</li>
+            <li className="PicContainer">
+              <img className="ProfilePic" src={this.props.user.profile_pic} />
+            </li>
+          </ul>
+        </div>
+        <div className="SuperWrap">
+          <div className="LeftHalf">
+            <div className="ProfileEdit">
+              {myOtherToggle ? (
+                <div className="changer">
+                  <div>
+                    Username:{" "}
+                    <input
+                      onChange={e =>
+                        this.universalChangeHandler(
+                          e.target.name,
+                          e.target.value
+                        )
+                      }
+                      value={username}
+                      name="username"
+                    />
+                  </div>
+                  <div>
+                    Profile Picture:{" "}
+                    <input
+                      onChange={e =>
+                        this.universalChangeHandler(
+                          e.target.name,
+                          e.target.value
+                        )
+                      }
+                      value={profile_pic}
+                      name="profile_pic"
+                    />
+                  </div>
+                  <button onClick={() => this.changeUserInfo(id)}>
+                    Submit
+                  </button>
+                  <button
+                    onClick={() =>
+                      this.setState({ profile_pic: "", username: "" })
+                    }
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={() => this.setState({ myOtherToggle: false })}
+                  >
+                    Hide
+                  </button>
+                </div>
+              ) : (
+                <button onClick={() => this.setState({ myOtherToggle: true })}>
+                  Edit Profile
+                </button>
+              )}
             </div>
-            <div>
-              Profile Picture:{" "}
-              <input
-                onChange={e =>
-                  this.universalChangeHandler(e.target.name, e.target.value)
-                }
-                value={profile_pic}
-                name="profile_pic"
-              />
+            <div className="characterIntro">
+              <h3>Select character to post as</h3>
+              <select
+                onChange={e => this.characterChange(+e.target.value)}
+                value={this.state.selectedCharacter}
+                name="selectedCharacter"
+              >
+                <option />
+                {mappedSelector}
+              </select>
             </div>
-            <button onClick={() => this.changeUserInfo(id)}>Submit</button>
-            <button
-              onClick={() => this.setState({ profile_pic: "", username: "" })}
-            >
-              Reset
-            </button>
-            <button onClick={() => this.setState({ myOtherToggle: false })}>
-              Hide
-            </button>
+
+            {myToggle ? (
+              <div className="charContainer">
+                <div className="mappedCharacters">{mappedCharacters}</div>
+                <button onClick={() => this.setState({ myToggle: false })}>
+                  Hide
+                </button>
+                <h2>Name</h2>
+                <input
+                  onChange={e =>
+                    this.universalChangeHandler(e.target.name, e.target.value)
+                  }
+                  value={character_name}
+                  name="character_name"
+                />
+                <h2>Class</h2>
+                <input
+                  onChange={e =>
+                    this.universalChangeHandler(e.target.name, e.target.value)
+                  }
+                  value={character_class}
+                  name="character_class"
+                />
+                <h2>Description</h2>
+                <input
+                  onChange={e =>
+                    this.universalChangeHandler(e.target.name, e.target.value)
+                  }
+                  value={description}
+                  name="description"
+                />
+                <h2>Bio</h2>
+                <input
+                  onChange={e =>
+                    this.universalChangeHandler(e.target.name, e.target.value)
+                  }
+                  value={bio}
+                  name="bio"
+                />
+                <button onClick={() => this.addChar(id)}>
+                  Create New Character
+                </button>
+                <button
+                  onClick={() =>
+                    this.setState({
+                      character_name: "",
+                      character_class: "",
+                      description: "",
+                      bio: ""
+                    })
+                  }
+                >
+                  Reset
+                </button>
+              </div>
+            ) : (
+              <div className="show">
+                <h2>Characters</h2>
+                <button onClick={() => this.setState({ myToggle: true })}>
+                  Show
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
-          <button onClick={() => this.setState({ myOtherToggle: true })}>
-            Edit Profile
-          </button>
-        )}
-        {myToggle ? (
-          <div className="charContainer">
-            <div className="mappedCharacters">{mappedCharacters}</div>
-            <button onClick={() => this.setState({ myToggle: false })}>
-              Hide
-            </button>
-            <h2>Name</h2>
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={character_name}
-              name="character_name"
-            />
-            <h2>Class</h2>
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={character_class}
-              name="character_class"
-            />
-            <h2>Description</h2>
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={description}
-              name="description"
-            />
-            <h2>Bio</h2>
-            <input
-              onChange={e =>
-                this.universalChangeHandler(e.target.name, e.target.value)
-              }
-              value={bio}
-              name="bio"
-            />
-            <button onClick={() => this.addChar(id)}>
-              Create New Character
-            </button>
-            <button
-              onClick={() =>
-                this.setState({
-                  character_name: "",
-                  character_class: "",
-                  description: "",
-                  bio: ""
-                })
-              }
-            >
-              Reset
-            </button>
+          <div className="RightHalf">
+            <SearchContainer />
           </div>
-        ) : (
-          <div>
-            <h2>Characters</h2>
-            <button onClick={() => this.setState({ myToggle: true })}>
-              Show
-            </button>
-          </div>
-        )}
-        <SearchContainer />
-        <DungeonList getIdOnClick={this.getIdOnClick} />
+        </div>
+        <div className="ProfileDungeons">
+          <DungeonList getIdOnClick={this.getIdOnClick} />
+        </div>
       </div>
     );
   }

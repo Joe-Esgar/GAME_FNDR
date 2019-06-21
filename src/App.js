@@ -5,10 +5,13 @@ import Dungeon from "./Components/Dungeon/Dungeon";
 import "./reset.css";
 import "./App.scss";
 import LandingPad from "./Components/Landing/LandingPad";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer autoClose={2000} />
       <Switch>
         <Route exact path="/" component={LandingPad} />
         <Route path="/profile" component={Profile} />

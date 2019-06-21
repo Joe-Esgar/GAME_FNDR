@@ -5,6 +5,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import logo from "./logo2.png";
+import { ToastContainer, toast } from "react-toastify";
 
 class LandingHeader extends Component {
   constructor(props) {
@@ -33,20 +34,18 @@ class LandingHeader extends Component {
   login = () => {
     const { username, password } = this.state;
     if (!username || !password) {
-      return alert("Please enter a username and a password.");
+      return toast.error("Please enter a username and a password.");
     }
     axios
       .post("/api/login", { username, password })
       .then(res => {
+        toast.success("Log In Successful", {});
         this.props.setUser(res.data);
         this.setState({
           redirect: true
         });
       })
-      .catch(err => {
-        console.log(err);
-        return alert("Incorrect username or password.");
-      });
+      .catch(err => toast.error("Login Failed"));
   };
 
   render() {
@@ -58,10 +57,10 @@ class LandingHeader extends Component {
       <div className="headerContainer">
         <header>
           <div>
-            <img src={logo} alt="Logo" />
+            <img className="landingLogo" src={logo} alt="Logo" />
           </div>
           <h1>Dungeon Finder</h1>
-          <div>
+          <div className="HeaderLogin">
             <div>
               Username:{" "}
               <input
@@ -85,7 +84,9 @@ class LandingHeader extends Component {
                 name="password"
               />
             </div>
-            <button onClick={this.login}>Login</button>
+            <button className="LGBUTTON" onClick={this.login}>
+              Login
+            </button>
           </div>
         </header>
       </div>

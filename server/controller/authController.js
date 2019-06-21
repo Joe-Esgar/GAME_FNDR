@@ -24,7 +24,7 @@ module.exports = {
   },
 
   register: (req, res, next) => {
-    const { username, password, email, profile_pic } = req.body;
+    const { username, password, email } = req.body;
     const db = req.app.get("db");
     db.check_if_user_exists(username).then(foundUser => {
       if (foundUser.length) {
@@ -33,13 +33,11 @@ module.exports = {
         const saltRounds = 12;
         bcrypt.genSalt(saltRounds).then(salt => {
           bcrypt.hash(password, salt).then(hashedPassword => {
-            db.register([username, hashedPassword, email, profile_pic]).then(
-              createdUser => {
-                req.session.user = createdUser[0];
-                res.statusMessage = "Success";
-                res.status(200).send(req.session.user);
-              }
-            );
+            db.register([username, hashedPassword, email]).then(createdUser => {
+              req.session.user = createdUser[0];
+              res.statusMessage = "Success";
+              res.status(200).send(req.session.user);
+            });
           });
         });
       }

@@ -5,19 +5,26 @@ import { connect } from "react-redux";
 import { setPosts } from "../../ducks/postReducer";
 import { setCurrentCharacter } from "../../ducks/currentCharacterReducer";
 import { setUser } from "../../ducks/userReducer";
+import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 class StoreList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: ""
+      content: "",
+      redirect: false
     };
   }
 
   makePost = object => {
     console.log(object, "this is my post object");
     axios.post("/api/post", object).then(res => {
+      toast.success("Post Created");
       this.props.setPosts(res.data);
+      this.setState({
+        redirect: true
+      });
     });
   };
 
@@ -29,6 +36,9 @@ class StoreList extends Component {
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/dungeon" />;
+    }
     const { name, address } = this.props;
     const post = {
       content: this.state.content,

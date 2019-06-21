@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setUser } from "../../ducks/userReducer";
 import { Redirect } from "react-router-dom";
 import "./header.scss";
+import logo from "/Users/josephesgar/GAME_FNDR/src/Components/Landing/logo2.png";
 
 class Header extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class Header extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div>
+      <div className="ProfileHeader">
+        <img className="log" src={logo} />
         <button onClick={this.logout}>Logout</button>
       </div>
     );

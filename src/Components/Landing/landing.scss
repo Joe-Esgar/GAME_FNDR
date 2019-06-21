@@ -1,9 +1,27 @@
+$full-width: 100%;
+$flex: flex;
+$cen: center;
+
+%center-all {
+  display: flex;
+  justify-content: $cen;
+  align-items: $cen;
+}
+
+.regester,
+.intro,
+.registerContainer,
+.container,
+header {
+  display: $flex;
+}
+
 .wrapper {
   height: 100vh;
   width: 100vw;
 }
 
-body {
+.wrapper {
   height: 100vh;
   background: url("background.jpeg") no-repeat fixed;
   -webkit-background-size: cover;
@@ -19,73 +37,125 @@ body {
 }
 
 header {
-  display: flex;
   justify-content: space-between;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 60px;
   color: rgb(172, 22, 22);
   font-family: fantasy;
 }
 
-img {
+.landingLogo {
   height: 100%;
   width: 40%;
+  -webkit-transition: -webkit-transform 0.8s ease-in-out;
+  transition: transform 0.8s ease-in-out;
+}
+
+.landingLogo:hover {
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
 }
 
 .container {
   width: 100%;
   height: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extend %center-all;
 }
 
 .registerContainer {
   width: 35%;
   height: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* border-style: solid;
-  border-color: red;
-  border-width: 2px; */
+  @extend %center-all;
 }
 
 .register {
   width: 65%;
   height: 65%;
-  display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: $cen;
+  display: $flex;
   justify-content: space-evenly;
   border-style: solid;
   border-color: black;
   border-width: 4px;
-  /* color: rgb(172, 22, 22); */
   background-color: white;
   color: black;
   box-shadow: 10px 10px 8px black;
-  background: url("myscrool.jpeg");
-  background-size: contain;
+  background: url("myscrool.jpeg") no-repeat;
+  background-size: cover;
+  border-radius: 5%;
 }
 
 .intro {
-  width: 35%;
-  height: 70%;
-  display: flex;
+  width: 25%;
+  height: 50%;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @extend %center-all;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(214, 16, 16, 0.712),
+    rgb(0, 0, 0)
+  );
+  border-radius: 50%;
+  text-shadow: 0 0 2em rgba(255, 255, 255, 1);
+  transition: all 0.15s;
+  font-size: 20px;
+  font-family: fantasy;
+}
+
+.intro:hover {
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(0, 0, 0),
+    rgba(214, 16, 16, 0.712)
+  );
+  border-radius: 6%;
+  text-shadow: 0 0 2em rgba(255, 255, 255, 1);
 }
 
 .landingInput {
-  width: 80%;
-  height: 50%;
+  width: 50%;
+  height: 60%;
   border-radius: 5%;
 }
 
 button:hover {
-  background-color: grey;
+  text-shadow: 0 0 2em rgba(255, 255, 255, 1);
+  color: white;
+  background-color: red;
+  border-color: #ffffff;
+}
+
+button {
+  display: inline-block;
+  padding: 0.46em 1.6em;
+  border: 0.1em solid #000000;
+  margin: 0 0.2em 0.2em 0;
+  border-radius: 5%;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: fantasy;
+  font-weight: 300;
+  color: #000000;
+  text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.LPButton {
+  width: 45%;
+  font-size: 20px;
+}
+
+div.reg {
+  width: 100%;
+  text-align: center;
+}
+
+.LGBUTTON {
+  width: 100%;
+  font-size: 15px;
 }

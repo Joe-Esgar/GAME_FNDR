@@ -1,0 +1,41 @@
+.MessageBoardContainer {
+  width: 100vw;
+  height: 100vh;
+}
+
+.MessageBoardContainer {
+  .DungeonList {
+    width: 100%;
+    height: 15%;
+    border-color: black;
+    border: 2px solid;
+  }
+  .dungeonPosts {
+    width: 100%;
+    height: 85%;
+    border-color: black;
+    border: 2px solid;
+    .boardDisplay {
+      border-color: black;
+      border: 2px solid;
+      background-color: rgba(0, 0, 0, 0.726);
+      display: flex;
+      .postInfo {
+        width: 15%;
+        height: 100%;
+        border-left: 2px solid white;
+        border-right: 2px solid white;
+      }
+      .PostContent {
+        height: 100%;
+        width: 85%;
+        h5 {
+          margin-left: 5px;
+        }
+        p {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

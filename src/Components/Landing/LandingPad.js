@@ -5,6 +5,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import LandingHeader from "./LandingHeader";
+import { ToastContainer, toast } from "react-toastify";
 
 class LandingPad extends Component {
   constructor(props) {
@@ -42,13 +43,21 @@ class LandingPad extends Component {
     if (!username || !password || !email) {
       return alert("Please enter a username, password, and email");
     }
-    axios.post("/api/register", { username, password, email }).then(res => {
-      console.log("recieved user", res.data);
-      this.props.setUser(res.data);
-      this.setState({
-        redirect: true
-      });
-    });
+    axios
+      .post("/api/register", { username, password, email })
+      .then(res => {
+        toast.success(
+          "Register Successful, Make a character and select them to post! Have fun!",
+          {
+            autoClose: 10000
+          }
+        );
+        this.props.setUser(res.data);
+        this.setState({
+          redirect: true
+        });
+      })
+      .catch(err => toast.error("An error occured"));
   };
 
   render() {
@@ -101,8 +110,13 @@ class LandingPad extends Component {
                   />
                 </div>
                 <div className="reg">
-                  <button onClick={this.register}>Register</button>
-                  <button onClick={() => this.setState({ enter: false })}>
+                  <button className="LPButton" onClick={this.register}>
+                    Register
+                  </button>
+                  <button
+                    className="LPButton"
+                    onClick={() => this.setState({ enter: false })}
+                  >
                     Flee
                   </button>
                 </div>
@@ -115,7 +129,10 @@ class LandingPad extends Component {
                 them with <br />
                 enter here.
               </p>
-              <button onClick={() => this.setState({ enter: true })}>
+              <button
+                className="LPButton"
+                onClick={() => this.setState({ enter: true })}
+              >
                 Enter
               </button>
             </div>

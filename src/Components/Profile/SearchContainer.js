@@ -8,6 +8,7 @@ import FullList from "./FullList";
 import logo from "../Landing/logo2.png";
 import ogreJosh from "./ogreJosh.png";
 import DungeonList from "./DungeonList";
+import { toast } from "react-toastify";
 // import isEmpty from "lodash.isempty";
 
 const getMapBounds = (map, maps, places) => {
@@ -99,6 +100,7 @@ export default class SearchContainer extends Component {
         }`
       )
       .then(res => {
+        toast.success("Google is trying, please standbye");
         this.setState({
           geoData: res.data,
           lat: res.data.results[0].geometry.location.lat,
@@ -155,7 +157,6 @@ export default class SearchContainer extends Component {
     });
     return (
       <div className="SearchBox">
-        <h2>Address example: 111 Dupont Circle Phoenix AZ</h2>
         <input
           onChange={e =>
             this.universalChangeHandler(e.target.name, e.target.value)
@@ -164,6 +165,7 @@ export default class SearchContainer extends Component {
           name="myAddress"
         />
         <button onClick={() => this.getGeoData(myAddress)}>Search</button>
+        <h2>Scroll Down To View Results</h2>
         {toggle ? (
           <div id="map">
             <Fragment>

@@ -55,6 +55,15 @@ class Dungeon extends Component {
       this.setState({
         posts: res.data
       });
+      if (this.state.rerender) {
+        this.setState({
+          rerender: false
+        });
+      } else {
+        this.setState({
+          rerender: true
+        });
+      }
     });
   };
 
@@ -77,7 +86,8 @@ class Dungeon extends Component {
       return <Redirect to="/profile" />;
     }
     console.log(this.state.posts);
-    const mappedPosts = this.state.posts.map((element, index) => {
+    console.log(this.props);
+    const mappedPosts = this.props.posts.posts.map((element, index) => {
       return (
         <SelectedDungeon
           key={index}

@@ -1,7 +1,7 @@
 insert into users
-    (username, password, email, profile_pic)
+    (username, password, email)
 values
-    ($1, $2, $3, $4);
+    ($1, $2, $3);
 
 
 select username, email, profile_pic, user_id
