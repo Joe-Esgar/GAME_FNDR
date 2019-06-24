@@ -6,26 +6,7 @@ import StoreList from "./StoreList";
 import FullList from "./FullList";
 import logo from "../Landing/logo2.png";
 import ogreJosh from "./ogreJosh.png";
-import DungeonList from "./DungeonList";
 import { toast } from "react-toastify";
-// import isEmpty from "lodash.isempty";
-
-const getMapBounds = (map, maps, places) => {
-  const bounds = new maps.LatLngBounds();
-
-  places.forEach(place => {
-    bounds.extend(new maps.LatLng(place.lat, place.lng));
-  });
-  return bounds;
-};
-
-const bindResizeListener = (map, maps, bounds) => {
-  maps.event.addDomListenerOnce(map, "idle", () => {
-    maps.event.addDomListener(window, "resize", () => {
-      map.fitBounds(bounds);
-    });
-  });
-};
 
 export default class SearchContainer extends Component {
   constructor(props) {
@@ -43,7 +24,6 @@ export default class SearchContainer extends Component {
       listName: "",
       mapName: "",
       hover: false,
-      toggle: false,
       id: 0,
       secondToggle: false,
       image: logo
@@ -52,7 +32,7 @@ export default class SearchContainer extends Component {
 
   mapOnClick = id => {
     const found = this.state.places.filter((element, index) => {
-      return element.id == id;
+      return element.id === id;
     });
     console.log(found);
     if (found.length) {
@@ -133,15 +113,7 @@ export default class SearchContainer extends Component {
   };
 
   render() {
-    const {
-      myAddress,
-      searchResults,
-      toggle,
-      lat,
-      lon,
-      places,
-      secondToggle
-    } = this.state;
+    const { myAddress, toggle, places, secondToggle } = this.state;
     const fullList = places.map((store, index) => {
       return <FullList key={index} name={store.name} address={store.address} />;
     });

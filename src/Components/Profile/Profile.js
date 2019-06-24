@@ -16,7 +16,7 @@ import DungeonList from "./DungeonList";
 import CharacterSelector from "./CharacterSelector";
 import { setPosts } from "../../ducks/postReducer";
 import { Redirect } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 class Profile extends Component {
   constructor(props) {
@@ -195,7 +195,11 @@ class Profile extends Component {
           <ul>
             <li className="userName">{this.props.user.username}</li>
             <li className="PicContainer">
-              <img className="ProfilePic" src={this.props.user.profile_pic} />
+              <img
+                className="ProfilePic"
+                src={this.props.user.profile_pic}
+                alt="profile"
+              />
             </li>
           </ul>
         </div>

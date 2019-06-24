@@ -5,7 +5,7 @@ import Dungeon from "./Components/Dungeon/Dungeon";
 import "./reset.css";
 import "./App.scss";
 import LandingPad from "./Components/Landing/LandingPad";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {

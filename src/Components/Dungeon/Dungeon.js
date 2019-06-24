@@ -34,11 +34,6 @@ class Dungeon extends Component {
     });
   };
 
-  componentDidMount() {
-    this.getFromDB();
-    this.getDungeons();
-  }
-
   getFromDB = () => {
     axios.get("/api/user").then(res => {
       this.props.setUser(res.data);

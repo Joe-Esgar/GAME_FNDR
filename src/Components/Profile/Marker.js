@@ -10,6 +10,7 @@ export default function Marker(props) {
       className="points"
       lat={lat}
       lng={lng}
+      alt="map pin"
     />
   );
 }

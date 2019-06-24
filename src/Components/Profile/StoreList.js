@@ -61,7 +61,6 @@ class StoreList extends Component {
           }
           value={this.state.content}
           name="content"
-          placeholder="Type post here"
         />
         <button onClick={() => this.makePost(post)}>Post On this board.</button>
       </div>

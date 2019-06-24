@@ -5,7 +5,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import logo from "./logo2.png";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 class LandingHeader extends Component {
   constructor(props) {
