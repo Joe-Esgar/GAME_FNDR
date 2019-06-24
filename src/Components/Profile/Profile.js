@@ -107,6 +107,7 @@ class Profile extends Component {
         this.props.setCharacters(res.data);
       })
       .then(this.getFromDB());
+    toast.success("Character successfully created");
   };
 
   deleteChar = (chId, id) => {
@@ -306,9 +307,7 @@ class Profile extends Component {
                   value={bio}
                   name="bio"
                 />
-                <button onClick={() => this.addChar(id)}>
-                  Create New Character
-                </button>
+                <button onClick={() => this.addChar(id)}>Create</button>
                 <button
                   onClick={() =>
                     this.setState({

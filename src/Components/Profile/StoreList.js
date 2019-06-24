@@ -18,6 +18,9 @@ class StoreList extends Component {
   }
 
   makePost = object => {
+    if (!this.props.setCurrentCharacter.currentCharacter) {
+      toast.error("Please select a character.");
+    }
     console.log(object, "this is my post object");
     axios.post("/api/post", object).then(res => {
       toast.success("Post Created");

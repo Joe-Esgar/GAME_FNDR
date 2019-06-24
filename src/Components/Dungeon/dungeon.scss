@@ -1,9 +1,6 @@
 .MessageBoardContainer {
   width: 100vw;
   height: 100vh;
-}
-
-.MessageBoardContainer {
   .DungeonList {
     width: 100%;
     height: 15%;
@@ -34,6 +31,29 @@
         }
         p {
           margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 360px) and (max-height: 640px) {
+  .MessageBoardContainer {
+    .DungeonList {
+      height: 20%;
+    }
+    .dungeonPosts {
+      height: 80%;
+      .boardDisplay {
+        .postInfo {
+          width: 20%;
+          height: 100%;
+          border-left: 2px solid white;
+          border-right: 2px solid white;
+        }
+        .PostContent {
+          height: 100%;
+          width: 80%;
         }
       }
     }

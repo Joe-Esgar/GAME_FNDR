@@ -3,7 +3,6 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { setUser } from "../../ducks/userReducer";
 import { Redirect } from "react-router-dom";
-import "./header.scss";
 import logo from "./../Landing/logo2.png";
 
 class Header extends Component {
