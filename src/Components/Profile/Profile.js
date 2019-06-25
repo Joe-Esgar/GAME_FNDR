@@ -310,19 +310,21 @@ class Profile extends Component {
                   value={bio}
                   name="bio"
                 />
-                <button onClick={() => this.addChar(id)}>Create</button>
-                <button
-                  onClick={() =>
-                    this.setState({
-                      character_name: "",
-                      character_class: "",
-                      description: "",
-                      bio: ""
-                    })
-                  }
-                >
-                  Reset
-                </button>
+                <div>
+                  <button onClick={() => this.addChar(id)}>Create</button>
+                  <button
+                    onClick={() =>
+                      this.setState({
+                        character_name: "",
+                        character_class: "",
+                        description: "",
+                        bio: ""
+                      })
+                    }
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="show">
