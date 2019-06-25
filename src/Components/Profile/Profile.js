@@ -146,6 +146,9 @@ class Profile extends Component {
   };
 
   render() {
+    // if (!this.props.user.user) {
+    //   return <Redirect to="/" />;
+    // }
     console.log("this.props:", this.props);
     if (this.state.redirect) {
       return <Redirect to="/dungeon" />;
