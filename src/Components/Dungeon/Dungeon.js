@@ -9,6 +9,7 @@ import { setUser } from "../../ducks/userReducer";
 import { set_Dungeons } from "../../ducks/dungeonReducer";
 import { setCurrentCharacter } from "../../ducks/currentCharacterReducer";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 class Dungeon extends Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class Dungeon extends Component {
 
   render() {
     if (this.props.currentCharacter.currentCharacter === 0) {
-      alert("Sorry! Please Reselect your character!");
+      toast.error("Sorry! Please Reselect your character!");
       return <Redirect to="/profile" />;
     }
     console.log(this.state.posts);

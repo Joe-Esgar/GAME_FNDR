@@ -16,7 +16,7 @@
     flex-wrap: wrap;
     .DungeonContainer {
       ul:hover {
-        cursor: default;
+        cursor: url("goldGun.png"), auto;
         color: red;
       }
     }
