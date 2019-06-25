@@ -109,7 +109,7 @@ export default class SearchContainer extends Component {
     this.setState({
       image: logo
     });
-    return toast.success("MISSLES LAUNCHED! HOLD ON TO YOUR TEETH!");
+    return toast.success("That was a close one!");
   };
 
   render() {
