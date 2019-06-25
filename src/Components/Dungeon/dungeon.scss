@@ -15,6 +15,9 @@
     align-items: center;
     flex-wrap: wrap;
     .DungeonContainer {
+      button {
+        font-size: 13px;
+      }
       ul:hover {
         cursor: url("goldGun.png"), auto;
         color: red;
