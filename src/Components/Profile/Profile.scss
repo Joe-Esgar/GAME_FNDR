@@ -60,6 +60,7 @@ body {
         background-color: rgba(0, 0, 0, 0.726);
         display: flex;
         justify-content: center;
+        border-radius: 3.5%;
         .ProfilePic {
           width: 80%;
           height: 100%;
@@ -80,7 +81,7 @@ body {
       width: 30%;
       div {
         background-color: rgba(0, 0, 0, 0.726);
-        border-radius: 5%;
+        border-radius: 2.5%;
       }
       .ProfileEdit {
         margin-top: 10px;
@@ -172,6 +173,7 @@ body {
         height: 100%;
         overflow: scroll;
         margin-left: 1%;
+        border-radius: 2.5%;
         background-color: rgba(0, 0, 0, 0.726);
         input {
           width: 50%;
