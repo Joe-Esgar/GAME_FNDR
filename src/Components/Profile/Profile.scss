@@ -6,7 +6,11 @@ body {
     rgb(0, 0, 0)
   );
   color: white;
-  cursor: url("superclick.png"), auto;
+  cursor: url("silverglove.png"), auto;
+}
+
+button:hover {
+  cursor: url("goldGun.png"), auto;
 }
 
 #map {
@@ -210,6 +214,9 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        ul:hover {
+          color: red;
+        }
       }
     }
     .DungeonButton {
