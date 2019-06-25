@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./landingHeader.scss";
 import { setUser } from "../../ducks/userReducer";
 import axios from "axios";
 import { connect } from "react-redux";

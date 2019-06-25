@@ -1,18 +1,11 @@
-import React, { Component } from "react";
-import "./FullList.scss";
+import React from "react";
 
-export default class FullList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { name, address } = this.props;
-    console.log(name);
-    return (
-      <div className="fulllist">
-        {name} {address}
-      </div>
-    );
-  }
+export default function FullList(props) {
+  const { name, address } = props;
+  console.log(name);
+  return (
+    <div className="fulllist">
+      {name} {address}
+    </div>
+  );
 }

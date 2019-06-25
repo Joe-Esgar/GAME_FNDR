@@ -95,6 +95,7 @@ class Dungeon extends Component {
     });
     return (
       <div className="MessageBoardContainer">
+        <h1>Dungeon List</h1>
         <DungeonList getIdOnClick={this.getIdOnClick} />
         <div className="dungeonPosts">{mappedPosts}</div>
       </div>

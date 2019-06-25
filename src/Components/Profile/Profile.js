@@ -336,6 +336,12 @@ class Profile extends Component {
         </div>
         <div className="ProfileDungeons">
           <DungeonList getIdOnClick={this.getIdOnClick} />
+          <button
+            onClick={() => this.setState({ redirect: true })}
+            className="DungeonButton"
+          >
+            Dungeon Board
+          </button>
         </div>
       </div>
     );
