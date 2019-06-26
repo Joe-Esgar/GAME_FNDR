@@ -124,7 +124,10 @@ class Profile extends Component {
     const { username, profile_pic } = this.state;
     axios
       .put(`/api/user/${id}`, { username, profile_pic })
-      .then(res => {})
+      .then(res => {
+        this.props.setUser(res.data[0]);
+        toast.success("info changed");
+      })
       .catch(err => {
         return alert(err);
       });
@@ -146,6 +149,9 @@ class Profile extends Component {
   };
 
   render() {
+    if (!this.props.user.user) {
+      return <></>;
+    }
     console.log("this.props:", this.props);
     if (this.state.redirect) {
       return <Redirect to="/dungeon" />;
@@ -193,11 +199,11 @@ class Profile extends Component {
         <Header />
         <div className="profileContainer">
           <ul>
-            <li className="userName">{this.props.user.username}</li>
+            <li className="userName">{this.props.user.user.username}</li>
             <li className="PicContainer">
               <img
                 className="ProfilePic"
-                src={this.props.user.profile_pic}
+                src={this.props.user.user.profile_pic}
                 alt="profile"
               />
             </li>
