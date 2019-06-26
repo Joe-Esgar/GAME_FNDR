@@ -15,10 +15,10 @@ class Header extends Component {
 
   logout = () => {
     axios.get("/api/logout").then(res => {
-      this.props.setUser(null);
       this.setState({
         redirect: true
       });
+      this.props.setUser(null);
     });
   };
 

@@ -28,6 +28,9 @@ class Dungeons extends Component {
       .then(res => {
         toast.success("Post Created");
         this.props.setPosts(res.data);
+        this.setState({
+          content: ""
+        });
       })
       .catch(err => {
         toast.error("Post Failed");
