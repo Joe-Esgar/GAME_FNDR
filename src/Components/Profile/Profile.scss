@@ -96,9 +96,18 @@ button:hover {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        button {
-          width: 50%;
-          font-size: 20px;
+        .changer {
+          text-align: center;
+          height: 100%;
+          width: 100%;
+          overflow: scroll;
+          div {
+            button {
+              width: 50%;
+              height: 50%;
+              font-size: 20px;
+            }
+          }
         }
       }
       .characterIntro {
@@ -146,7 +155,7 @@ button:hover {
         }
         button {
           width: 20%;
-          height: 30%;
+          height: 45%;
           font-size: 15px;
           margin-left: 10px;
         }
@@ -260,10 +269,16 @@ button:hover {
           border-radius: 5%;
         }
         .ProfileEdit {
-          button {
-            height: 80%;
-            width: 80%;
-            font-size: 15px;
+          .changer {
+            div {
+              input {
+                width: 80%;
+                margin-bottom: 10px;
+              }
+              button {
+                width: 60%;
+              }
+            }
           }
         }
         .characterIntro {
@@ -282,11 +297,11 @@ button:hover {
           }
         }
         .charContainer {
-          button {
-            width: 80%;
-          }
           input {
             width: 85%;
+          }
+          button {
+            width: 80%;
           }
         }
       }
