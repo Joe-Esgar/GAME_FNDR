@@ -96,17 +96,21 @@ button:hover {
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        button {
+          width: 50%;
+          font-size: 20px;
+          height: 80%;
+        }
         .changer {
           text-align: center;
           height: 100%;
           width: 100%;
           overflow: scroll;
-          div {
-            button {
-              width: 50%;
-              height: 50%;
-              font-size: 20px;
-            }
+
+          button {
+            width: 35%;
+            height: 50%;
+            font-size: 20px;
           }
         }
       }
@@ -269,15 +273,20 @@ button:hover {
           border-radius: 5%;
         }
         .ProfileEdit {
+          button {
+            width: 80%;
+            font-size: 15px;
+          }
           .changer {
             div {
               input {
                 width: 80%;
                 margin-bottom: 10px;
               }
-              button {
-                width: 60%;
-              }
+            }
+            button {
+              width: 80%;
+              font-size: 15px;
             }
           }
         }
