@@ -1,6 +1,7 @@
 .MessageBoardContainer {
   width: 100vw;
   height: 100vh;
+  overflow: scroll;
   h1 {
     display: none;
     height: 15%;

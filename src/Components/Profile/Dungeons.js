@@ -15,22 +15,18 @@ class Dungeons extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     chId: this.props.currentCharacter.currentCharacter,
-  //     user_id: this.props.user.user_id
-  //   });
-  // }
-
   createPost = object => {
+    if (!object.content) {
+      return toast.error("Please enter a message");
+    }
     axios
       .post(`/api/post`, object)
       .then(res => {
         toast.success("Post Created");
-        this.props.setPosts(res.data);
         this.setState({
           content: ""
         });
+        this.props.getIdOnClick(this.props.id);
       })
       .catch(err => {
         toast.error("Post Failed");
