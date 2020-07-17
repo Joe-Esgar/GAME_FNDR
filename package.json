@@ -11,7 +11,7 @@
     "express-session": "^1.16.1",
     "google-map-react": "^1.1.4",
     "http-proxy-middleware": "^0.19.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "massive": "^5.11.0",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
