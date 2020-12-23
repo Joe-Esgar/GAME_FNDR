@@ -42,9 +42,6 @@ export default class SearchContainer extends Component {
     }
   };
 
-  //   https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
-  //https://maps.googleapis.com/maps/api/geocode/json?address=101+Dupont+Circle,+Phoenix,+AZ&key=AIzaSyBg2MsXJxC-YYK5d2p7ty-puOu4ca4wukc
-
   makeMap = arr => {
     const newArray = [];
     const regex = /gamestop/gi;
